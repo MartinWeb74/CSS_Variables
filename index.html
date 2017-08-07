@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scoped CSS Variables and JS</title>
+  <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ 
+ <div class="contain">
+ 
+  <h3>Update CSS Variables with <span class="hightlight">JS</span></h3>
+
+  <div class="controls">
+    <label for="spacing">Border:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    
+    <br>
+    
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    
+    <br>
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ffc600"> 
+  </div>
+  
+  <img src="https://placeimg.com/640/480/tech">
+  <!-- 
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  -->
+  
+  <div class="description">
+    <h4>How it works</h4>
+    <p>Set the variables globally in the CSS section:</p>
+
+    <div class="code">
+    <code>
+       :root { <br>
+      --base: #ffc600;  <br>
+      --spacing: 5px; <br>
+      --blur: 1px; <br>
+      }
+    </code>
+    </div>
+    
+    <p>Then simply use them to set values:</p>
+    
+    <div class="code">
+    <code>
+      img { <br>
+      padding: var(--spacing); <br>
+      background: var(--base); <br>
+      filter: blur(var(--blur)); <br>
+    }
+    </code>
+    </div>
+    <p>There is more to <a href="http://www.javascriptkit.com/dhtmltutors/css-variables-tutorial.shtml" target="_blank">CSS Variables</a></p>
+
+  </div>
+
+
+  
+ </div> <!-- end of contain -->
+
+  
+
+  <script>
+    // get the input elements
+    const inputs = document.querySelectorAll('.controls input');
+    
+    function handleUpdate() {
+      // add the px string after the value, add nothing on the color code
+      const suffix = this.dataset.sizing || ''; 
+      
+      // set the property the input used
+      // use back ticks to interpolate date into string 
+      // the name of the object is equal to the variable name
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+    
+    // listen for change on input values and call the action
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    
+  </script>
+
+</body>
+</html>
